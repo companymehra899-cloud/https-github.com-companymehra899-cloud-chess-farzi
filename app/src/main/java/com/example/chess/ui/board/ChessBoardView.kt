@@ -81,17 +81,17 @@ data class BoardStyleSpec(
 
 fun getBoardStyle(theme: BoardTheme = BoardTheme.WOODEN): BoardStyleSpec = when (theme) {
     BoardTheme.WOODEN -> BoardStyleSpec(
-        lightSquareTop = Color(0xFFF5D6AC),
-        lightSquareBottom = Color(0xFFDCB079),
-        darkSquareTop = Color(0xFF784322),
-        darkSquareBottom = Color(0xFF542A10),
+        lightSquareTop = Color(0xFFF6DEB9),
+        lightSquareBottom = Color(0xFFDCAE78),
+        darkSquareTop = Color(0xFF7A3E1D),
+        darkSquareBottom = Color(0xFF472009),
         frameOuterGradient = listOf(
-            Color(0xFF432413),
-            Color(0xFF2E170A),
-            Color(0xFF1D0E05)
+            Color(0xFF3F1D0E),
+            Color(0xFF291208),
+            Color(0xFF160904)
         ),
-        frameBorderColor = Color(0xFF140803),
-        innerBevelColor = Color(0xFF522A12),
+        frameBorderColor = Color(0xFF150702),
+        innerBevelColor = Color(0xFF8C5424),
         coordinateColor = Color(0xFFE2BA84),
         cornerAccentColor = Color(0xFFFFD700).copy(alpha = 0.35f),
         lastMoveColor = Color(0xFFF59E0B).copy(alpha = 0.35f),
@@ -218,17 +218,17 @@ fun ChessBoardView(
                                     if (isLight) {
                                         Brush.verticalGradient(
                                             listOf(
-                                                Color(0xFFF7D8B0),
-                                                Color(0xFFE4BB84),
-                                                Color(0xFFDCB078)
+                                                Color(0xFFF9E4C5),
+                                                Color(0xFFEBCDA5),
+                                                Color(0xFFDCB282)
                                             )
                                         )
                                     } else {
                                         Brush.verticalGradient(
                                             listOf(
-                                                Color(0xFF7B4422),
-                                                Color(0xFF643416),
-                                                Color(0xFF52280F)
+                                                Color(0xFF7D411F),
+                                                Color(0xFF623114),
+                                                Color(0xFF4C230B)
                                             )
                                         )
                                     }
@@ -258,21 +258,42 @@ fun ChessBoardView(
                                     ) { onSquareClicked(pos) },
                                 contentAlignment = Alignment.Center
                             ) {
-                                // Wood grain streaks for wooden theme
+                                // Handcrafted natural wood grain & tile bevel
                                 if (isWooden) {
                                     Canvas(modifier = Modifier.fillMaxSize()) {
-                                        val grainColor = if (isLight) Color(0xFFC79C64).copy(alpha = 0.18f) else Color(0xFF381A08).copy(alpha = 0.22f)
-                                        val strokeW = 1.dp.toPx()
+                                        val grainColor = if (isLight) Color(0xFFB58957).copy(alpha = 0.22f) else Color(0xFF2C1304).copy(alpha = 0.28f)
+                                        val strokeW = 1.1.dp.toPx()
+                                        
+                                        // Subtle inlaid tile edge highlight & bevel
+                                        val bevelHighlight = if (isLight) Color(0x33FFFFFF) else Color(0x22FFFFFF)
+                                        val bevelShadow = Color(0x33000000)
+                                        drawLine(bevelHighlight, Offset(0f, 0f), Offset(size.width, 0f), 0.8.dp.toPx())
+                                        drawLine(bevelHighlight, Offset(0f, 0f), Offset(0f, size.height), 0.8.dp.toPx())
+                                        drawLine(bevelShadow, Offset(0f, size.height), Offset(size.width, size.height), 0.8.dp.toPx())
+                                        drawLine(bevelShadow, Offset(size.width, 0f), Offset(size.width, size.height), 0.8.dp.toPx())
+
+                                        // Organic wavy wood grain streaks (distinct per square)
+                                        val seed = ((r * 13 + c * 29) % 10) / 10f
+                                        val y1 = size.height * (0.22f + seed * 0.15f)
+                                        val y2 = size.height * (0.58f + seed * 0.18f)
+                                        val y3 = size.height * (0.85f - seed * 0.12f)
+
                                         drawLine(
                                             color = grainColor,
-                                            start = Offset(0f, size.height * 0.35f),
-                                            end = Offset(size.width, size.height * 0.38f),
+                                            start = Offset(0f, y1),
+                                            end = Offset(size.width, y1 + size.height * 0.04f),
                                             strokeWidth = strokeW
                                         )
                                         drawLine(
                                             color = grainColor,
-                                            start = Offset(0f, size.height * 0.72f),
-                                            end = Offset(size.width, size.height * 0.69f),
+                                            start = Offset(0f, y2),
+                                            end = Offset(size.width, y2 - size.height * 0.03f),
+                                            strokeWidth = strokeW
+                                        )
+                                        drawLine(
+                                            color = grainColor,
+                                            start = Offset(0f, y3),
+                                            end = Offset(size.width, y3 + size.height * 0.02f),
                                             strokeWidth = strokeW
                                         )
                                     }

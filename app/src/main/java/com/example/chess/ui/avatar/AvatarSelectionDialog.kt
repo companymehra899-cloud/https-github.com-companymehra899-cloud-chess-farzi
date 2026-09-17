@@ -43,6 +43,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -205,11 +207,14 @@ fun AvatarSelectionDialog(
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(
-                                    text = item.name.split(" ").last(),
-                                    fontSize = 10.sp,
+                                    text = item.name,
+                                    fontSize = 9.sp,
                                     fontWeight = FontWeight.Medium,
                                     color = if (isSelected) Color.White else Color(0xFF94A3B8),
-                                    maxLines = 1
+                                    maxLines = 2,
+                                    textAlign = TextAlign.Center,
+                                    overflow = TextOverflow.Ellipsis,
+                                    lineHeight = 11.sp
                                 )
                             }
                         }

@@ -235,9 +235,6 @@ fun GamePlayScreen(
                 materialAdvantage = if (whiteAdvantage > 0) "+$whiteAdvantage" else null
             )
 
-            // Move history strip
-            MoveHistoryStrip(moveHistory = moveHistory)
-
             // Bottom In-Game Action Bar
             Row(
                 modifier = Modifier
@@ -457,56 +454,6 @@ fun PlayerInfoBar(
                     else if (isTurn) Color(0xFFFFD700)
                     else Color(0xFFE2E8F0)
                 )
-            }
-        }
-    }
-}
-
-@Composable
-fun MoveHistoryStrip(moveHistory: List<com.example.chess.model.Move>) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(36.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(Color(0xFF131520))
-            .border(1.dp, Color(0xFF222638), RoundedCornerShape(10.dp))
-            .padding(horizontal = 10.dp),
-        contentAlignment = Alignment.CenterStart
-    ) {
-        if (moveHistory.isEmpty()) {
-            Text(
-                text = "Move history will appear here (e.g. 1. e4 e5)",
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Medium,
-                color = Color(0xFF64748B)
-            )
-        } else {
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val pairs = moveHistory.chunked(2)
-                itemsIndexed(pairs) { index, pair ->
-                    val moveNum = index + 1
-                    val whiteMove = pair[0].notation
-                    val blackMove = if (pair.size > 1) pair[1].notation else ""
-                    val isLastPair = index == pairs.lastIndex
-
-                    Surface(
-                        shape = RoundedCornerShape(6.dp),
-                        color = if (isLastPair) Color(0xFF22283A) else Color(0xFF1A1C28),
-                        border = BorderStroke(1.dp, if (isLastPair) Color(0xFFFFD700).copy(alpha = 0.4f) else Color(0xFF2B3045))
-                    ) {
-                        Text(
-                            text = "$moveNum. $whiteMove $blackMove",
-                            fontSize = 11.sp,
-                            fontWeight = if (isLastPair) FontWeight.Bold else FontWeight.Medium,
-                            color = if (isLastPair) Color(0xFFFFD700) else Color(0xFFE2E8F0),
-                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
-                        )
-                    }
-                }
             }
         }
     }

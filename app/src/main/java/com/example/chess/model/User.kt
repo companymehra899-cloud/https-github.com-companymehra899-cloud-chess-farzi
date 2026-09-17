@@ -14,7 +14,7 @@ data class UserProfile(
     val borderColorId: String = "gold",
     val title: String = "Rising Star",
     val country: String = "Global",
-    val preferredBoardTheme: BoardTheme = BoardTheme.VECTOR_BW,
+    val preferredBoardTheme: BoardTheme = BoardTheme.WOODEN,
     val preferredPieceTheme: PieceTheme = PieceTheme.PLASTIC
 ) {
     val winRate: Int
