@@ -1,0 +1,6 @@
+{
+  "name": "Chess Master",
+  "description": "Play chess online or vs AI with wooden and classic themes, customizable avatars, friend requests, in-game chat, move history, and global leaderboards.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
